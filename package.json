@@ -1,5 +1,5 @@
 {
-  "name": "sofa-api",
+  "name": "@gu-corp/sofa-api",
   "description": "Create REST APIs with GraphQL",
   "version": "0.18.8",
   "type": "module",
