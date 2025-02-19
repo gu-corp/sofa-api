@@ -10,6 +10,7 @@ import {
   isEnumType,
   GraphQLType,
   isUnionType,
+  isInputObjectType,
 } from 'graphql';
 import { mapToPrimitive, mapToRef } from './utils.js';
 
@@ -68,7 +69,7 @@ export function resolveFieldType(
     };
   }
 
-  if (isObjectType(type)) {
+  if (isObjectType(type) || isInputObjectType(type)) {
     return {
       $ref: mapToRef(type.name),
     };

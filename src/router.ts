@@ -341,16 +341,17 @@ function getRouteSchemas({
       varObj.required.push(varName);
     }
   }
+  const isUsingRequestBody = useRequestBody(method);
   return {
     request: {
-      json: useRequestBody(method)
+      json: isUsingRequestBody
         ? resolveRequestBody(info!.variables, sofa.schema, info!.operation, {
             customScalars: sofa.customScalars,
             enumTypes: sofa.enumTypes,
           })
         : undefined,
       params,
-      query,
+      query: isUsingRequestBody ? undefined : query,
     },
     responses: {
       [responseStatus]: resolveResponse({
@@ -448,7 +449,7 @@ function useHandler(config: {
   return async (request: RouterRequest, serverContext: {}) => {
     try {
       let body = {};
-      if (request.body != null) {
+      if (request.text) {
         const strBody = await request.text();
         if (strBody) {
           try {
