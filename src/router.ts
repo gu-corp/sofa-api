@@ -346,9 +346,9 @@ function getRouteSchemas({
     request: {
       json: isUsingRequestBody
         ? resolveRequestBody(info!.variables, sofa.schema, info!.operation, {
-            customScalars: sofa.customScalars,
-            enumTypes: sofa.enumTypes,
-          })
+          customScalars: sofa.customScalars,
+          enumTypes: sofa.enumTypes,
+        })
         : undefined,
       params,
       query: isUsingRequestBody ? undefined : query,
@@ -446,10 +446,12 @@ function useHandler(config: {
   const info = config.info!;
   const errorHandler: ErrorHandler = sofa.errorHandler || defaultErrorHandler;
 
-  return async (request: RouterRequest, serverContext: {}) => {
+  return async (request: RouterRequest, serverContext: { req?: RouterRequest }) => {
     try {
       let body = {};
-      if (request.text) {
+      if (serverContext?.req?.body) {
+        body = serverContext?.req?.body;
+      } else if (request.text) {
         const strBody = await request.text();
         if (strBody) {
           try {
