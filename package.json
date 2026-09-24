@@ -61,7 +61,7 @@
     "openapi-types": "^12.1.0",
     "param-case": "^3.0.4",
     "title-case": "^3.0.3",
-    "qs": "^6.11.2",
+    "qs": "^6.16.0",
     "tslib": "^2.5.0"
   },
   "scripts": {
